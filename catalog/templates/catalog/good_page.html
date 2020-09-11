@@ -1,0 +1,8 @@
+{% extends 'catalog/index.html' %}
+{% block title %} Страница товара {% endblock %}
+{% block content %}
+    <div class="good__item--cart">
+        <h2 class="good__title--cart">{{ good.name }}</h2>
+        <img class="good__img--cart" src="http://placehold.it/400x200" alt="{{ good.name }}">
+    </div>
+{% endblock %}

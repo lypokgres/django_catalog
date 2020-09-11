@@ -1,0 +1,55 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Электронный каталог{% endblock %}</title>
+    <link href="../../static/catalog/style.css" rel="stylesheet">
+</head>
+<body>
+{% block content %}
+<header class="header">
+    <h1 class="header__title">Электронный каталог</h1>
+    <form class="header__form">
+        <label><input type="search" name="search" placeholder="Строка поиска:"></label>
+    </form>
+    <nav class="header__nav">
+        <h2 class="header__nav-title">Адресная строка:</h2>
+        <a class="header__nav-item" href="#">/мониторы</a>
+        <a class="header__nav-item" href="#">/led</a>
+    </nav>
+</header>
+
+<aside class="category">
+    <h2 class="category__title">Категории:</h2>
+    <ul class="category__list">
+        {% for category in categories_list %}
+            <li><a class="category__item" href="{{ category.get_url }}">{{ category }}</a></li>
+        {% endfor %}
+    </ul>
+</aside>
+<main class="good">
+    <div class="good__list">
+        {% for good in goods %}
+            <a class="good__item" href="{{ good.get_url }}">
+                <h3 class="good__item-title">{{ good }}</h3>
+                <img class="good__item-img" src="http://placehold.it/100x100" alt="Фото тавара">
+            </a>
+        {% endfor %}
+    </div>
+    <div class="pagination">
+
+        {% if goods.has_previous %}
+            <a href="?page={{ goods.previous_page_number }}">Назад</a>
+        {% endif %}
+
+
+        {% if goods.has_next %}
+            <a href="?page={{ goods.next_page_number }}">Вперед</a>
+        {% endif %}
+
+    </div>
+</main>
+{% endblock %}
+</body>
+</html>
