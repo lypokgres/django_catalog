@@ -10,20 +10,22 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
-    def get_url(self):
-        if self.parent:
-            url = self.parent.get_url()
-        else:
+    def get_absolute_url(self):
+        if not self.parent:
             return '{}/'.format(self.slug)
-        return '{}{}/'.format(url, self.slug)
+        return '{}{}/'.format(self.parent.get_absolute_url(), self.slug)
 
     def get_img(self):
         if self.image:
             return self.image.url
-        elif self.parent.image:
+        if self.parent.image:
             return self.parent.image.url
-        else:
-            return "http://placehold.it/100x100"
+        return "http://placehold.it/100x100"
+
+    def get_indent(self, nesting=0):
+        if not self.parent:
+            return str(nesting)
+        return self.parent.get_indent(nesting + 1)
 
 
 class Good(models.Model):
@@ -35,8 +37,8 @@ class Good(models.Model):
     def __str__(self):
         return self.name
 
-    def get_url(self):
-        url = '{}{}_{}/'.format(self.category.get_url(), self.slug, str(self.id))
+    def get_absolute_url(self):
+        url = '{}{}_{}/'.format(self.category.get_absolute_url(), self.slug, str(self.id))
         return url
 
     def get_img(self):
@@ -44,3 +46,4 @@ class Good(models.Model):
             return self.image.url
         else:
             return self.category.get_img()
+

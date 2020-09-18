@@ -48,6 +48,18 @@ body {
     list-style: none;
 }
 
+.category__item {
+    display: block;
+}
+
+.category__item--1 {
+    padding-left: 20px;
+}
+
+.category__item--2 {
+    padding-left: 40px;
+}
+
 .good__list {
     display: flex;
     flex-wrap: wrap;

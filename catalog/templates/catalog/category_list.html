@@ -1,0 +1,8 @@
+{% for subcategory in category.child.all %}
+    <a class="category__item category__item--{{ subcategory.get_indent }}" href="/{{ subcategory.get_absolute_url }}">
+        {{ subcategory.name }}
+    </a>
+    {% if subcategory.child.all %}
+        {% include 'catalog/category_list.html' with category=subcategory %}
+    {% endif %}
+{% endfor %}
