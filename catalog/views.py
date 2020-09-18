@@ -1,7 +1,7 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render
 from .models import Category, Good
-from .utils import find_child, find_parent
+from .utils import find_child
 from django.http import Http404
 
 
@@ -10,17 +10,18 @@ def index(request, path=''):
     goods_list = Good.objects.all()
     page = request.GET.get('page')
     current_category = '/'
+    breadcrumbs = None
 
     if path:
         path = path.split('/')
         current_category = Category.objects.get(slug=path[-1])
         category_child = find_child(current_category)
         goods_list = goods_list.filter(category=current_category) | goods_list.filter(category__in=category_child)
-        for category in find_parent(current_category):
+        breadcrumbs = [category for category in current_category.find_parent()]
+        breadcrumbs.reverse()
+        for category in current_category.find_parent():
             if category.slug not in path:
                 raise Http404
-
-    breadcrumbs = [Category.objects.get(slug=item) for item in path]
 
     paginator = Paginator(goods_list, 12)
     try:
@@ -42,9 +43,8 @@ def good_page(request, pk):
     path = request.path.strip('/').split('/')[:-1]
     good = Good.objects.get(id=pk.strip('/'))
     categories_list = Category.objects.filter(parent=None)
-    breadcrumbs = [Category.objects.get(slug=item) for item in path]
-    breadcrumbs.append(good)
-    print(path)
+    breadcrumbs = [category for category in good.find_parent()]
+    breadcrumbs.reverse()
     context = {
         'good': good,
         'categories_list': categories_list,

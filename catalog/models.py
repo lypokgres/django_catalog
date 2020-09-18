@@ -27,6 +27,13 @@ class Category(models.Model):
             return str(nesting)
         return self.parent.get_indent(nesting + 1)
 
+    def find_parent(self):
+        parents = [self]
+        if self.parent:
+            parent = self.parent
+            parents.extend(parent.find_parent())
+        return parents
+
 
 class Good(models.Model):
     image = models.ImageField(upload_to='image', blank=True, null=True)
@@ -46,4 +53,12 @@ class Good(models.Model):
             return self.image.url
         else:
             return self.category.get_img()
+
+    def find_parent(self):
+        parents = [self]
+        if self.category:
+            parent = self.category
+            parents.extend(parent.find_parent())
+        return parents
+
 
