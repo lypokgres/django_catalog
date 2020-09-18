@@ -3,13 +3,19 @@ from django.shortcuts import render
 from .models import Category, Good
 from .utils import find_child
 from django.http import Http404
+from django.shortcuts import redirect
+from django.urls import reverse
 
 
 def index(request, path=''):
     goods_list = Good.objects.all()
     page = request.GET.get('page')
+    search = request.GET.get('search')
     current_category = '/'
     breadcrumbs = None
+
+    if search:
+        goods_list = goods_list.filter(name__icontains=search)
 
     if path:
         path = path.split('/')
@@ -41,6 +47,11 @@ def good_page(request, pk):
     good = Good.objects.get(id=pk.strip('/'))
     breadcrumbs = [category for category in good.find_parent()]
     breadcrumbs.reverse()
+    search = request.GET.get('search')
+
+    if search:
+        return redirect(reverse('index'), kwargs={'search': search})
+
     context = {
         'good': good,
         'breadcrumbs': breadcrumbs
