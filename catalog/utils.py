@@ -8,3 +8,10 @@ def find_child(category):
         find_child(child)
     return all_child
 
+
+def find_parent(item):
+    parents = [item]
+    if item.parent:
+        parent = item.parent
+        parents.extend(find_parent(parent))
+    return parents
