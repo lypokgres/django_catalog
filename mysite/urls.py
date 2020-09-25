@@ -17,11 +17,13 @@ from django.contrib import admin
 from django.urls import include, path
 from . import settings
 from django.contrib.staticfiles.urls import static
+import debug_toolbar
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('catalog.urls'))
+    path('', include('catalog.urls')),
+    path('__debug__/', include(debug_toolbar.urls)),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

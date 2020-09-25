@@ -1,0 +1,27 @@
+{% extends 'catalog/index.html' %}
+{% block content %}
+<main class="good">
+
+    <div class="good__list">
+            {% for good in goods_list %}
+                <a class="good__item" href="{{ good.url }}">
+                    <h3 class="good__item-title">{{ good.name }}</h3>
+                    <img class="good__item-img" src="{{ good.image }}" width="100" height="100" alt="Фото тавара">
+                </a>
+            {% empty %}
+                <p>Нету такого</p>
+                <img src="https://i.gifer.com/yH.gif">
+            {% endfor %}
+    </div>
+
+    <div class="pagination">
+        {% if goods_list.has_previous %}
+            <a href="?search={{ search_text }}&page={{ goods_list.previous_page_number }}">Назад</a>
+        {% endif %}
+        {% if goods_list.has_next %}
+            <a href="?search={{ search_text }}&page={{ goods_list.next_page_number }}">Вперед</a>
+        {% endif %}
+    </div>
+
+</main>
+{% endblock %}

@@ -10,14 +10,14 @@
 
 <header class="header">
     <h1 class="header__title">Электронный каталог</h1>
-    <form class="header__form">
+    <form action="/search/" method="get" class="header__form">
         <label><input type="search" name="search" placeholder="Строка поиска:"></label>
     </form>
     <nav class="header__nav">
         <h2 class="header__nav-title">Адресная строка:</h2>
         <a class="header__nav-item" href="/">/</a>
         {% for item in breadcrumbs %}
-            <a href="/{{ item.get_absolute_url }}">{{ item.name }}/</a>
+            <a href="{{ item.get_absolute_url }}">{{ item.name }}/</a>
         {% endfor %}
     </nav>
 </header>
@@ -25,12 +25,7 @@
 <aside class="category">
     <h2 class="category__title">Категории:</h2>
     <ul class="category__list">
-        {% for category in categories_list %}
-            <li>
-                <a class="category__item" href="/{{ category.get_absolute_url }}">{{ category.name }}</a>
-                {% include 'catalog/category_list.html' %}
-            </li>
-        {% endfor %}
+        {% include 'catalog/category_list.html' %}
     </ul>
 </aside>
 
@@ -38,10 +33,13 @@
 <main class="good">
     <div class="good__list">
         {% for good in goods %}
-            <a class="good__item" href="/{{ good.get_absolute_url }}">
+            <a class="good__item" href="{{ good.url }}">
                 <h3 class="good__item-title">{{ good.name }}</h3>
-                <img class="good__item-img" src="{{ good.get_img }}" width="100" height="100" alt="Фото тавара">
+                <img class="good__item-img" src="{{ good.image }}" width="100" height="100" alt="Фото тавара">
             </a>
+        {% empty %}
+            <p>Пустота</p>
+            <img src="https://i.gifer.com/yH.gif" alt="Траволта недоумевает">
         {% endfor %}
     </div>
     <div class="pagination">

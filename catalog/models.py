@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.exceptions import ValidationError
 
 
 class Category(models.Model):
@@ -12,7 +13,7 @@ class Category(models.Model):
 
     def get_absolute_url(self):
         if not self.parent:
-            return '{}/'.format(self.slug)
+            return '/{}/'.format(self.slug)
         return '{}{}/'.format(self.parent.get_absolute_url(), self.slug)
 
     def get_img(self):
@@ -33,6 +34,10 @@ class Category(models.Model):
             parent = self.parent
             parents.extend(parent.find_parent())
         return parents
+
+    def clean(self):
+        if int(self.get_indent()) > 2:
+            raise ValidationError('OMG Слишком много категорий в категориях')
 
 
 class Good(models.Model):
@@ -60,5 +65,3 @@ class Good(models.Model):
             parent = self.category
             parents.extend(parent.find_parent())
         return parents
-
-
