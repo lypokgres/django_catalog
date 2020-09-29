@@ -10,8 +10,9 @@
 
 <header class="header">
     <h1 class="header__title">Электронный каталог</h1>
-    <form action="/search/" method="get" class="header__form">
-        <label><input type="search" name="search" placeholder="Строка поиска:"></label>
+    <form action="/search/" method="get" class="header__form" id="search__form">
+        {% csrf_token %}
+        <label><input type="search" name="search" id="search__input" placeholder="Строка поиска:"></label>
     </form>
     <nav class="header__nav">
         <h2 class="header__nav-title">Адресная строка:</h2>
@@ -55,6 +56,7 @@
     </div>
 </main>
 {% endblock %}
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="{% static 'catalog/script.js' %}"></script>
 </body>
 </html>

@@ -1,7 +1,10 @@
 from django.shortcuts import render, get_object_or_404
+from django.template.loader import render_to_string
+
 from .models import Category, Good
 from .utils import find_all_children, pagination, get_url_category, get_good_tree
 from django.http import Http404
+from django.http import JsonResponse
 
 
 def index(request):
@@ -50,3 +53,13 @@ def search(request):
         'search_text': search_text
     }
     return render(request, 'catalog/search.html', context)
+
+
+def search_ajax(request):
+    cat_list = Category.objects.all()
+    goods_list = []
+    if request.POST:
+        goods_list = get_good_tree(Good.objects.filter(name__icontains=request.POST.get('query')), cat_list)
+    rendered = render_to_string('catalog/search_ajax.html', {'goods_list': pagination(request, goods_list, 12)})
+    return JsonResponse({'search_ajax': rendered})
+

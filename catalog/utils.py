@@ -72,7 +72,6 @@ def get_category_img(category, cat_list):
 def pagination(request, goods_list, count_goods):
     page = request.GET.get('page')
     paginator = Paginator(goods_list, count_goods)
-    print(request, '11111111111111111111111111111')
     try:
         goods = paginator.page(page)
     except PageNotAnInteger:
