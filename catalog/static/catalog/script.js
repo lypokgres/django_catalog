@@ -13,3 +13,18 @@ $("#search__form").on("submit", function () {
     })
     return false
 });
+
+const buttons = $(".category__button");
+const element = $(".category__item")
+
+
+// version 1.0
+
+buttons.on('click', function (button) {
+    $(this).toggleClass('active')
+    for (let i = 0; i < element.length; i++) {
+        if (element[i].id === button.target.id) {
+            element.eq(i).toggleClass("show")
+        }
+    }
+})

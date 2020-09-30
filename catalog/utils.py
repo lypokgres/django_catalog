@@ -29,6 +29,8 @@ def get_flat_tree(categories, lvl=0):
     flat_tree = []
     for category in categories:
         tree_element = {
+            'id': category['obj'].id,
+            'parent_id': category['obj'].parent_id,
             'name': category['obj'].name,
             'slug': category['obj'].slug,
             'lvl': lvl,

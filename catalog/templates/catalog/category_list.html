@@ -1,5 +1,8 @@
 {% for category in categories_list %}
-    <li>
-        <a href="{{ category.url }}" class="category__item--{{ category.lvl }}">{{ category.name }}</a>
+    <li class="category__item category__item--{{ category.lvl }}" id="{{ category.parent_id }}">
+        <button type="button" class="category__button" id="{{ category.id }}"></button>
+        <a href="{{ category.url }}" class="category__link {{ category.parent_id }}">
+            {{ category.name }}
+        </a>
     </li>
 {% endfor %}
