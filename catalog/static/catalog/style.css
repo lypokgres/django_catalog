@@ -40,23 +40,18 @@ body {
     margin-bottom: 10px;
 }
 
-.category__list {
-    margin: 0;
-}
-
-.category__item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 5px;
+.category > .category__button {
+    display: none;
 }
 
 .category__button {
-    position: relative;
+    position: absolute;
     border: none;
     background-color: transparent;
     padding: 0;
     width: 15px;
     height: 15px;
+    left: -15px;
 }
 
 .category__button::after {
@@ -85,25 +80,33 @@ body {
 
 .category__list li {
     list-style: none;
+    margin-bottom: 5px;
 }
 
 .category__link {
-    display: block;
     padding-left: 5px;
 }
 
-.category__item--1 {
+.category__item {
+    position: relative;
+}
+
+.category__list {
+    padding: 0;
+}
+
+.category__list--1 {
+    display: none;
+    padding-left: 30px;
+}
+
+.category__list--0 {
     display: none;
     padding-left: 20px;
 }
 
-.category__item--2 {
-    display: none;
-    padding-left: 40px;
-}
-
 .show {
-    display: flex;
+    display: block;
 }
 
 .good__list {

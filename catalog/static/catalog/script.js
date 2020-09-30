@@ -15,18 +15,12 @@ $("#search__form").on("submit", function () {
 });
 
 const buttons = $(".category__button");
-const element = $(".category__item")
 
-
-// version 1.0
-
-buttons.on('click', function (button) {
-    $(this).toggleClass('active')
-    for (let i = 0; i < element.length; i++) {
-        if (element[i].id === button.target.id) {
-            element.eq(i).toggleClass("show")
-        }
+buttons.on('click', function () {
+    if ($(this).attr("id") === 'None') {
+        $('.category__list').not($(this).next()).removeClass('show')
+        $('.category__button').not($(this)).removeClass('active')
     }
+    $(this).toggleClass('active')
+    $(this).next().toggleClass('show')
 })
-
-//sd

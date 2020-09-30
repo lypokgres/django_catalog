@@ -6,12 +6,21 @@ def not_nesting_categories(categories):
     return [category for category in categories if not category.parent_id]
 
 
-def get_tree(categories, cat_list):
+def get_tree(categories, cat_list, lvl=0):
     """Строю дерево с категориями верхнего уровня"""
     tree = []
     for category in categories:
         child = get_children(category, cat_list)
-        tree.append({'obj': category, 'child': get_tree(child, cat_list), 'url': get_url_category(category, cat_list)})
+        tree.append({
+            'obj': category,
+            'id': category.id,
+            'parent_id': category.parent_id,
+            'name': category.name,
+            'slug': category.slug,
+            'url': get_url_category(category, cat_list),
+            'lvl': lvl,
+            'child': get_tree(child, cat_list, lvl + 1)
+        })
     return tree
 
 
