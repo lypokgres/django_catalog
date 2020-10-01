@@ -1,5 +1,5 @@
 from catalog.models import Category
-from catalog.utils import get_tree, get_flat_tree, not_nesting_categories
+from catalog.utils import get_tree, not_nesting_categories
 
 
 def categories(request):

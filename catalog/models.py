@@ -18,10 +18,10 @@ class Category(models.Model):
 
     def get_img(self):
         if self.image:
-            return self.image.url
+            return self.image.url.split('/')[-1]
         if self.parent.image:
-            return self.parent.image.url
-        return "http://placehold.it/100x100"
+            return self.parent.image.url.split('/')[-1]
+        return "net-foto.png"
 
     def get_indent(self, nesting=0):
         if not self.parent:
@@ -55,7 +55,7 @@ class Good(models.Model):
 
     def get_img(self):
         if self.image:
-            return self.image.url
+            return self.image.url.split('/')[-1]
         else:
             return self.category.get_img()
 

@@ -33,23 +33,6 @@ def get_children(category, cat_list):
     return all_child
 
 
-def get_flat_tree(categories, lvl=0):
-    """Строю плоское, упорядоченное дерево категорий для расскрутки в шаблоне"""
-    flat_tree = []
-    for category in categories:
-        tree_element = {
-            'id': category['obj'].id,
-            'parent_id': category['obj'].parent_id,
-            'name': category['obj'].name,
-            'slug': category['obj'].slug,
-            'lvl': lvl,
-            'url': category['url']
-        }
-        flat_tree.append(tree_element)
-        flat_tree.extend(get_flat_tree(category['child'], lvl + 1))
-    return flat_tree
-
-
 def get_parent(category, cat_list):
     """Нахожу родителя текущей категории"""
     for cat in cat_list:
@@ -74,10 +57,10 @@ def get_url_category(category, cat_list):
 
 def get_category_img(category, cat_list):
     if category.image:
-        return category.image.url
+        return category.image.url.split('/')[-1]
     if get_parent(category, cat_list).image:
-        return get_parent(category, cat_list).image.url
-    return "http://placehold.it/100x100"
+        return get_parent(category, cat_list).image.url.split('/')[-1]
+    return "net-foto.png"
 
 
 def pagination(request, goods_list, count_goods):
@@ -117,5 +100,5 @@ def get_url_good(good, cat_list):
 
 def get_good_img(good, category, cat_list):
     if good.image:
-        return good.image.url
+        return good.image.url.split('/')[-1]
     return get_category_img(category, cat_list)

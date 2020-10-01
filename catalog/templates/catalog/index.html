@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Электронный каталог{% endblock %}</title>
-    <link href="{% static 'catalog/style.css' %}" rel="stylesheet">
+    <link href="/style.css" rel="stylesheet">
 </head>
 <body>
 
@@ -34,7 +34,7 @@
         {% for good in goods %}
             <a class="good__item" href="{{ good.url }}">
                 <h3 class="good__item-title">{{ good.name }}</h3>
-                <img class="good__item-img" src="{{ good.image }}" width="100" height="100" alt="Фото тавара">
+                <img class="good__item-img" src="/{{ good.image }}" width="100" height="100" alt="Фото тавара">
             </a>
         {% empty %}
             <p>Пустота</p>
@@ -55,6 +55,6 @@
 </main>
 {% endblock %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="{% static 'catalog/script.js' %}"></script>
+<script src="/script.js"></script>
 </body>
 </html>
