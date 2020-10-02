@@ -1,8 +1,9 @@
-<button type="button" class="category__button" id="{{ category.parent_id }}"></button>
-<ul class="category__list category__list--{{ category.lvl }}">
+<button type="button" class="category__button"></button>
+<ul class="category__list category__list--{{ category.lvl }}
+    {% if category.parent_id == None %} first {% endif %}" id="{{ category.parent_id }}">
     {% for category in categories_list %}
-        <li class="category__item" id="{{ category.parent_id }}">
-            <a href="{{ category.url }}" class="category__link {{ category.parent_id }}">
+        <li class="category__item">
+            <a href="{{ category.url }}" class="category__link">
                 {{ category.name }}
             </a>
             {% if category.child %}
